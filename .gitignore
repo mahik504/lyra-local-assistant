@@ -21,6 +21,10 @@ yarn-error.log*
 .env*
 !.env.example
 
+# local AEGIS runtime
+.aegis/
+*.local.log
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

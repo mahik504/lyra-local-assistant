@@ -1,6 +1,6 @@
 {
-  "name": "ultron-orb-ui",
-  "version": "1.0.0",
+  "name": "aegis-local-assistant",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",

@@ -2,14 +2,15 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ULTRON Orb UI",
-  description: "An Iron Man-inspired holographic orb built with Three.js and Next.js",
+  title: "AEGIS — Local Personal Operating Layer",
+  description: "A private, local-first assistant for thinking, planning, and working with your knowledge base.",
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#000000",
+  themeColor: "#050708",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({

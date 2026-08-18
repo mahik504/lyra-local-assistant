@@ -1,5 +1,5 @@
-import JarvisOrb from "@/components/JarvisOrb";
+import AegisOrb from "@/components/AegisOrb";
 
 export default function Home() {
-  return <JarvisOrb />;
+  return <AegisOrb />;
 }
