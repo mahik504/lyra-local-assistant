@@ -37,7 +37,7 @@ Configure `OBSIDIAN_VAULT_PATH` only in `.env.local`, then open `http://localhos
 
 ## Repository
 
-The private repository is available at [github.com/mahik504/lyra-local-assistant](https://github.com/mahik504/lyra-local-assistant). The completed implementation is on `main` at commit `f32638f`.
+The private repository is available at [github.com/mahik504/lyra-local-assistant](https://github.com/mahik504/lyra-local-assistant). The completed implementation is on `main` at commit `9357809`.
 
 ## Deferred hosting decision
 
