@@ -1,4 +1,4 @@
-export type AegisMcpServer = {
+export type LyraMcpServer = {
   id: string;
   label: string;
   transport: "stdio" | "sse" | "streamable-http";
@@ -8,15 +8,15 @@ export type AegisMcpServer = {
   allowedTools: string[];
 };
 
-export function readConfiguredMcpServers(): AegisMcpServer[] {
-  const raw = process.env.AEGIS_MCP_CONFIG_JSON?.trim();
+export function readConfiguredMcpServers(): LyraMcpServer[] {
+  const raw = process.env.LYRA_MCP_CONFIG_JSON?.trim();
   if (!raw) return [];
   try {
     const parsed = JSON.parse(raw) as unknown;
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter((server): server is AegisMcpServer => {
+    return parsed.filter((server): server is LyraMcpServer => {
       if (!server || typeof server !== "object") return false;
-      const value = server as Partial<AegisMcpServer>;
+      const value = server as Partial<LyraMcpServer>;
       return typeof value.id === "string" && typeof value.label === "string" && (value.transport === "stdio" || value.transport === "sse" || value.transport === "streamable-http") && typeof value.enabled === "boolean" && Array.isArray(value.allowedTools);
     });
   } catch {
@@ -24,6 +24,6 @@ export function readConfiguredMcpServers(): AegisMcpServer[] {
   }
 }
 
-export function canUseMcpTool(server: AegisMcpServer, toolId: string) {
+export function canUseMcpTool(server: LyraMcpServer, toolId: string) {
   return server.enabled && server.allowedTools.includes(toolId);
 }

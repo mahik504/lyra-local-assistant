@@ -52,7 +52,7 @@ export async function runObsidianWorkflow(prompt: string, confirm = false): Prom
     const plan = "1. Choose one meaningful outcome.\n2. Complete the smallest next action before opening new threads.\n3. Close the day with a short review and tomorrow handoff.";
     const requiresConfirmation = !config.autoWrite && !confirm;
     if (requiresConfirmation) {
-      return { workflow, requiresConfirmation, text: note.content ? `I read ${note.path}. I can append a focused plan under an AEGIS Plan section after you confirm.` : `Your daily note ${note.path} does not exist yet. I can create it with a focused plan after you confirm.` };
+      return { workflow, requiresConfirmation, text: note.content ? `I read ${note.path}. I can append a focused plan under an LYRA Plan section after you confirm.` : `Your daily note ${note.path} does not exist yet. I can create it with a focused plan after you confirm.` };
     }
     const result = await appendDailyPlan(plan);
     return { workflow, requiresConfirmation: false, changedPath: result.path, text: `Added the focused daily plan to ${result.path}.` };

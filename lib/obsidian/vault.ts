@@ -19,7 +19,7 @@ export function getVaultConfig() {
     dailyFolder: env("OBSIDIAN_DAILY_FOLDER", "Daily"),
     projectFolder: env("OBSIDIAN_PROJECT_FOLDER", "Projects"),
     taskFolder: env("OBSIDIAN_TASK_FOLDER", "Tasks"),
-    autoWrite: env("AEGIS_AUTO_WRITE", "false").toLowerCase() === "true",
+    autoWrite: env("LYRA_AUTO_WRITE", "false").toLowerCase() === "true",
   };
 }
 
@@ -92,7 +92,7 @@ export async function captureIdea(content: string, tags: string[] = []) {
   const { candidate } = safeRelativePath(relativePath);
   await mkdir(path.dirname(candidate), { recursive: true });
   const tagLine = tags.length ? `tags: [${tags.map((tag) => JSON.stringify(tag)).join(", ")}]\n` : "tags: []\n";
-  const note = `---\ntype: idea\ncreated: ${now.toISOString()}\n${tagLine}source: aegis\n---\n\n# ${content.slice(0, 80).trim()}\n\n${content.trim()}\n`;
+  const note = `---\ntype: idea\ncreated: ${now.toISOString()}\n${tagLine}source: lyra\n---\n\n# ${content.slice(0, 80).trim()}\n\n${content.trim()}\n`;
   await writeFile(candidate, note, { encoding: "utf8", flag: "wx" });
   return { path: path.relative(root, candidate).split(path.sep).join("/"), content: note };
 }
@@ -116,7 +116,7 @@ export async function appendDailyPlan(plan: string, date = new Date()) {
   const relativePath = path.join(config.dailyFolder, filename);
   const { candidate } = safeRelativePath(relativePath);
   await mkdir(path.dirname(candidate), { recursive: true });
-  const section = `\n\n## AEGIS Plan\n\n${plan.trim()}\n`;
+  const section = `\n\n## LYRA Plan\n\n${plan.trim()}\n`;
   await writeFile(candidate, section, { encoding: "utf8", flag: "a" });
   return { path: path.relative(root, candidate).split(path.sep).join("/"), content: section };
 }
@@ -129,7 +129,7 @@ export async function createTaskNote(task: string) {
   const relativePath = path.join(config.taskFolder, filename);
   const { candidate } = safeRelativePath(relativePath);
   await mkdir(path.dirname(candidate), { recursive: true });
-  const note = `---\ntype: task\ncreated: ${now.toISOString()}\nstatus: open\nsource: aegis\n---\n\n- [ ] ${task.trim()}\n`;
+  const note = `---\ntype: task\ncreated: ${now.toISOString()}\nstatus: open\nsource: lyra\n---\n\n- [ ] ${task.trim()}\n`;
   await writeFile(candidate, note, { encoding: "utf8", flag: "wx" });
   return { path: path.relative(root, candidate).split(path.sep).join("/"), content: note };
 }
@@ -143,7 +143,7 @@ export async function createProjectBrief(title: string, goals: string, sourcePat
   await mkdir(path.dirname(candidate), { recursive: true });
   const now = new Date().toISOString();
   const links = sourcePaths.map((source) => `- [[${source.replace(/\.md$/i, "")}]]`).join("\n");
-  const note = `---\ntype: project-brief\ncreated: ${now}\nsource: aegis\n---\n\n# ${title.trim()}\n\n## Outcome\n\n${goals.trim()}\n\n## Sources\n\n${links || "- Add linked source notes"}\n\n## Next actions\n\n- [ ] Define the next concrete step\n`;
+  const note = `---\ntype: project-brief\ncreated: ${now}\nsource: lyra\n---\n\n# ${title.trim()}\n\n## Outcome\n\n${goals.trim()}\n\n## Sources\n\n${links || "- Add linked source notes"}\n\n## Next actions\n\n- [ ] Define the next concrete step\n`;
   await writeFile(candidate, note, { encoding: "utf8", flag: "wx" });
   return { path: path.relative(root, candidate).split(path.sep).join("/"), content: note };
 }

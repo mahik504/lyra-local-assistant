@@ -1,10 +1,10 @@
-# AEGIS — Local Personal Operating Layer
+# LYRA — Local Personal Operating Layer
 
-AEGIS is a local-first personal assistant interface built around a preserved procedural Three.js orb. It is designed to help with thinking, planning, knowledge retrieval, and small repeatable workflows while keeping the boundary around personal files explicit. The visual core comes from the upstream [ULTRON Orb UI](https://github.com/SAGAR-TAMANG/ultron-by-sagar-builds); this repository preserves the orb, mouse/touch controls, keyboard controls, and MediaPipe hand tracking while adding a usable personal workspace.
+LYRA is a local-first personal assistant interface built around a preserved procedural Three.js orb. It is designed to help with thinking, planning, knowledge retrieval, and small repeatable workflows while keeping the boundary around personal files explicit. The visual core comes from the upstream [ULTRON Orb UI](https://github.com/SAGAR-TAMANG/ultron-by-sagar-builds); this repository preserves the orb, mouse/touch controls, keyboard controls, and MediaPipe hand tracking while adding a usable personal workspace.
 
-> **Design principle:** AEGIS should feel calm and capable, not theatrical. It keeps the original orb as an ambient system surface and adds a practical assistant rail for real work.
+> **Design principle:** LYRA should feel calm and capable, not theatrical. It keeps the original orb as an ambient system surface and adds a practical assistant rail for real work.
 
-![AEGIS orb interface](docs/screenshot.png)
+![LYRA orb interface](docs/screenshot.png)
 
 ## What is included
 
@@ -13,11 +13,11 @@ The current version is a private, local-first Next.js application with a right-s
 | Area | Current behavior |
 | --- | --- |
 | Visual system | Procedural amber orb with grain, scanlines, vignette, and responsive HUD preserved from upstream |
-| Assistant shell | AEGIS identity, local/vault/model status, workflow shortcuts, chat surface, and composer |
+| Assistant shell | LYRA identity, local/vault/model status, workflow shortcuts, chat surface, and composer |
 | Local model routing | Fast, balanced, reasoning, and long-context routes selected from prompt shape and configured through environment variables |
 | Obsidian search | Searches Markdown notes inside the configured vault boundary and returns ranked note paths and excerpts |
 | Obsidian capture | Creates timestamped idea notes in the configured capture folder after an explicit confirmation, unless local auto-write is enabled |
-| Daily planning | Reads the current daily note and can append a structured AEGIS Plan section after confirmation |
+| Daily planning | Reads the current daily note and can append a structured LYRA Plan section after confirmation |
 | Task workflow | Creates a Markdown task note in the configured task folder after confirmation |
 | Project briefs | Creates a structured Markdown brief with outcome, sources, and next actions |
 | Voice input | Uses browser speech recognition when supported; otherwise the composer remains available for typed input |
@@ -41,36 +41,36 @@ npm run build
 npm run start
 ```
 
-The default UI works without a configured model or vault. In that mode AEGIS uses honest local fallback responses and does not claim to have read or changed personal files.
+The default UI works without a configured model or vault. In that mode LYRA uses honest local fallback responses and does not claim to have read or changed personal files.
 
 ## Local configuration
 
 Copy `.env.example` to `.env.local`. The real file is ignored by Git and should never be committed.
 
 ```dotenv
-AEGIS_LLM_BASE_URL=https://your-openai-compatible-provider.example/v1
-AEGIS_LLM_API_KEY=replace-me
-AEGIS_MODEL_FAST=your-fast-model-id
-AEGIS_MODEL_BALANCED=your-balanced-model-id
-AEGIS_MODEL_REASONING=your-reasoning-model-id
-AEGIS_MODEL_LONG_CONTEXT=your-long-context-model-id
-AEGIS_LLM_TIMEOUT_MS=30000
+LYRA_LLM_BASE_URL=https://your-openai-compatible-provider.example/v1
+LYRA_LLM_API_KEY=replace-me
+LYRA_MODEL_FAST=your-fast-model-id
+LYRA_MODEL_BALANCED=your-balanced-model-id
+LYRA_MODEL_REASONING=your-reasoning-model-id
+LYRA_MODEL_LONG_CONTEXT=your-long-context-model-id
+LYRA_LLM_TIMEOUT_MS=30000
 
 OBSIDIAN_VAULT_PATH=/replace/with/your/ObsidianVault
 OBSIDIAN_CAPTURE_FOLDER=00 Inbox
 OBSIDIAN_DAILY_FOLDER=Daily
 OBSIDIAN_PROJECT_FOLDER=Projects
 OBSIDIAN_TASK_FOLDER=Tasks
-AEGIS_AUTO_WRITE=false
+LYRA_AUTO_WRITE=false
 ```
 
-Use `AEGIS_AUTO_WRITE=true` only after confirming the folder mapping and note templates. The safer default is `false`, which keeps local writes preview-first. The model gateway accepts an OpenAI-compatible `/chat/completions` contract and does not hard-code provider-specific model IDs.
+Use `LYRA_AUTO_WRITE=true` only after confirming the folder mapping and note templates. The safer default is `false`, which keeps local writes preview-first. The model gateway accepts an OpenAI-compatible `/chat/completions` contract and does not hard-code provider-specific model IDs.
 
 ## Obsidian boundary
 
-AEGIS resolves every requested path relative to `OBSIDIAN_VAULT_PATH` and rejects paths that escape the configured root. Search skips hidden directories, `.obsidian`, `node_modules`, and non-Markdown files. Write workflows create Markdown notes only inside the configured capture, daily, project, and task folders.
+LYRA resolves every requested path relative to `OBSIDIAN_VAULT_PATH` and rejects paths that escape the configured root. Search skips hidden directories, `.obsidian`, `node_modules`, and non-Markdown files. Write workflows create Markdown notes only inside the configured capture, daily, project, and task folders.
 
-The assistant endpoint exposes a local write confirmation flow. For a write request, AEGIS first returns a proposal. The UI presents a `Confirm write` action, and only the confirmed request is passed to the writer. External actions such as sending, publishing, uploading, or pushing are classified as higher risk and are not silently performed by the current local adapter.
+The assistant endpoint exposes a local write confirmation flow. For a write request, LYRA first returns a proposal. The UI presents a `Confirm write` action, and only the confirmed request is passed to the writer. External actions such as sending, publishing, uploading, or pushing are classified as higher risk and are not silently performed by the current local adapter.
 
 ## Existing orb controls
 
@@ -95,14 +95,14 @@ Select **GESTURES OFF** or press `G`, then allow camera access. A pinched thumb 
 
 ## Architecture
 
-The project keeps the rendering and interaction layer separate from the local assistant layer. The orb scene remains in `lib/orbScene.ts`, hand tracking remains in `lib/handTracker.ts`, and the AEGIS client shell lives in `components/AegisOrb.tsx`. Server routes under `app/api` provide a narrow boundary for assistant requests and readiness information.
+The project keeps the rendering and interaction layer separate from the local assistant layer. The orb scene remains in `lib/orbScene.ts`, hand tracking remains in `lib/handTracker.ts`, and the LYRA client shell lives in `components/LyraOrb.tsx`. Server routes under `app/api` provide a narrow boundary for assistant requests and readiness information.
 
 ```text
 Browser UI
   ├─ Procedural orb + mouse/touch controls
   ├─ Optional MediaPipe webcam gestures
   ├─ Voice input when browser-supported
-  └─ AEGIS assistant rail
+  └─ LYRA assistant rail
        ├─ /api/status
        └─ /api/assistant
             ├─ policy classification
@@ -112,13 +112,13 @@ Browser UI
 
 | Path | Responsibility |
 | --- | --- |
-| `components/AegisOrb.tsx` | Client interaction shell, orb lifecycle, chat, voice input, confirmation UI, and local session memory |
+| `components/LyraOrb.tsx` | Client interaction shell, orb lifecycle, chat, voice input, confirmation UI, and local session memory |
 | `components/JarvisOrb.tsx` | Preserved upstream interface component kept available for rollback and comparison |
 | `lib/orbScene.ts` | Three.js scene construction, animation, camera controls, and post-processing |
 | `lib/handTracker.ts` | MediaPipe HandLandmarker webcam tracking and gesture interpretation |
-| `lib/aegis/model-gateway.ts` | Environment-driven route selection and OpenAI-compatible completions |
-| `lib/aegis/policy.ts` | Risk classification for reads, local writes, external actions, and destructive actions |
-| `lib/aegis/tool-registry.ts` | Explicit tool capability metadata for future MCP and skill adapters |
+| `lib/lyra/model-gateway.ts` | Environment-driven route selection and OpenAI-compatible completions |
+| `lib/lyra/policy.ts` | Risk classification for reads, local writes, external actions, and destructive actions |
+| `lib/lyra/tool-registry.ts` | Explicit tool capability metadata for future MCP and skill adapters |
 | `lib/obsidian/vault.ts` | Safe Markdown discovery and bounded note reads/writes |
 | `lib/obsidian/workflows.ts` | Capture, search, daily planning, task, and project-brief workflows |
 | `app/api/assistant/route.ts` | Local assistant request boundary |
@@ -132,9 +132,9 @@ The minimum verification loop is:
 npm run build
 ```
 
-The project has been verified against a temporary fixture vault for search, preview-only capture, confirmed capture, and bounded file creation. A production build succeeds with the AEGIS interface and both local API routes. The Next.js build currently reports a tracing warning because the server-side vault adapter intentionally uses filesystem operations; this is documented as a packaging concern for a future standalone deployment rather than a runtime failure.
+The project has been verified against a temporary fixture vault for search, preview-only capture, confirmed capture, and bounded file creation. A production build succeeds with the LYRA interface and both local API routes. The Next.js build currently reports a tracing warning because the server-side vault adapter intentionally uses filesystem operations; this is documented as a packaging concern for a future standalone deployment rather than a runtime failure.
 
-Before enabling personal-vault writes, test with a disposable vault containing representative Markdown notes. Confirm that search returns expected paths, preview mode creates no files, confirmed mode writes only inside the configured folder, and the `AEGIS_AUTO_WRITE` setting is understood by the operator.
+Before enabling personal-vault writes, test with a disposable vault containing representative Markdown notes. Confirm that search returns expected paths, preview mode creates no files, confirmed mode writes only inside the configured folder, and the `LYRA_AUTO_WRITE` setting is understood by the operator.
 
 ## Roadmap
 
@@ -142,7 +142,7 @@ The next local milestones are a richer structured response renderer, a persisten
 
 ## Attribution and license
 
-The orb foundation is derived from the MIT-licensed upstream project [ULTRON Orb UI](https://github.com/SAGAR-TAMANG/ultron-by-sagar-builds), whose original visual and interaction work is preserved in this repository. The upstream project also documents its relationship to the creator’s broader ULTRON interface work at [sagartamang.com/projects/ultron](https://sagartamang.com/projects/ultron). AEGIS-specific additions are authored for this private personal repository.
+The orb foundation is derived from the MIT-licensed upstream project [ULTRON Orb UI](https://github.com/SAGAR-TAMANG/ultron-by-sagar-builds), whose original visual and interaction work is preserved in this repository. The upstream project also documents its relationship to the creator’s broader ULTRON interface work at [sagartamang.com/projects/ultron](https://sagartamang.com/projects/ultron). LYRA-specific additions are authored for this private personal repository.
 
 ## References
 

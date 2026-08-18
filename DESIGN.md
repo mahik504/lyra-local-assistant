@@ -1,8 +1,8 @@
-# AEGIS Design Direction
+# LYRA Design Direction
 
 ## Product character
 
-AEGIS is a local-first personal operating layer: calm, capable, private, and always ready. The interface keeps the existing procedural orb as the system’s visual anchor, but shifts the surrounding experience from a sci-fi demo toward an actual daily workspace.
+LYRA is a local-first personal operating layer: calm, capable, private, and always ready. The interface keeps the existing procedural orb as the system’s visual anchor, but shifts the surrounding experience from a sci-fi demo toward an actual daily workspace.
 
 ## Preservation rules
 
@@ -15,7 +15,7 @@ The orb scene, mouse/touch navigation, keyboard controls, webcam gesture interac
 | `--bg` | `#050708` | Application background |
 | `--surface` | `rgba(9, 17, 20, 0.82)` | Glass panels |
 | `--line` | `rgba(92, 225, 203, 0.22)` | Borders and dividers |
-| `--accent` | `#62e1cb` | Primary AEGIS interaction color |
+| `--accent` | `#62e1cb` | Primary LYRA interaction color |
 | `--accent-soft` | `#b7fff1` | Active labels and emphasis |
 | `--legacy-amber` | `#ffaa30` | Preserved orb/HUD warmth |
 | `--text` | `#e8f5f3` | Primary text |

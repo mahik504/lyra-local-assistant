@@ -22,15 +22,15 @@ function readModel(name: string, fallback = "") {
 
 export function getGatewayConfig(): GatewayConfig {
   return {
-    baseUrl: readModel("AEGIS_LLM_BASE_URL", readModel("OPENAI_API_BASE")),
-    apiKey: readModel("AEGIS_LLM_API_KEY", readModel("OPENAI_API_KEY")),
+    baseUrl: readModel("LYRA_LLM_BASE_URL", readModel("OPENAI_API_BASE")),
+    apiKey: readModel("LYRA_LLM_API_KEY", readModel("OPENAI_API_KEY")),
     models: {
-      fast: readModel("AEGIS_MODEL_FAST"),
-      balanced: readModel("AEGIS_MODEL_BALANCED"),
-      reasoning: readModel("AEGIS_MODEL_REASONING"),
-      "long-context": readModel("AEGIS_MODEL_LONG_CONTEXT"),
+      fast: readModel("LYRA_MODEL_FAST"),
+      balanced: readModel("LYRA_MODEL_BALANCED"),
+      reasoning: readModel("LYRA_MODEL_REASONING"),
+      "long-context": readModel("LYRA_MODEL_LONG_CONTEXT"),
     },
-    timeoutMs: Number.parseInt(readModel("AEGIS_LLM_TIMEOUT_MS", "30000"), 10) || 30000,
+    timeoutMs: Number.parseInt(readModel("LYRA_LLM_TIMEOUT_MS", "30000"), 10) || 30000,
   };
 }
 

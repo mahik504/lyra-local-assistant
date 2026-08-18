@@ -1,6 +1,6 @@
 import type { ActionRisk } from "./policy";
 
-export type AegisTool = {
+export type LyraTool = {
   id: string;
   label: string;
   description: string;
@@ -8,7 +8,7 @@ export type AegisTool = {
   enabledByDefault: boolean;
 };
 
-export const AEGIS_TOOLS: AegisTool[] = [
+export const LYRA_TOOLS: LyraTool[] = [
   { id: "obsidian.search", label: "Knowledge search", description: "Search approved vault notes and return linked excerpts.", risk: "read-only", enabledByDefault: true },
   { id: "obsidian.capture", label: "Idea capture", description: "Create or append an idea note inside the configured capture folder.", risk: "reversible-write", enabledByDefault: true },
   { id: "obsidian.tasks", label: "Task extraction", description: "Turn note content into linked tasks with source context.", risk: "reversible-write", enabledByDefault: true },
@@ -19,5 +19,5 @@ export const AEGIS_TOOLS: AegisTool[] = [
 ];
 
 export function getTool(toolId: string) {
-  return AEGIS_TOOLS.find((tool) => tool.id === toolId);
+  return LYRA_TOOLS.find((tool) => tool.id === toolId);
 }

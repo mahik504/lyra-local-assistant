@@ -5,7 +5,7 @@ import { createOrbScene, type OrbSceneApi } from "@/lib/orbScene";
 import { HandTracker, type TrackerStatus } from "@/lib/handTracker";
 
 type CameraState = "off" | "starting" | "on" | "error";
-type ChatMessage = { role: "aegis" | "user"; text: string };
+type ChatMessage = { role: "lyra" | "user"; text: string };
 type AssistantResponse = { text?: string; requiresConfirmation?: boolean; changedPath?: string; sources?: Array<{ path: string; title: string; excerpt: string; score: number }> };
 type StatusPayload = { vaultConfigured: boolean; modelConfigured: boolean; autoWrite: boolean };
 type SpeechRecognitionResultEvent = { results: ArrayLike<ArrayLike<{ transcript: string }>> };
@@ -41,7 +41,7 @@ const QUICK_ACTIONS: QuickAction[] = [
   { label: "Shape a brief", description: "Turn notes into direction", prompt: "Create a concise project brief from my related notes." },
 ];
 
-export default function AegisOrb() {
+export default function LyraOrb() {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const overlayRef = useRef<HTMLCanvasElement>(null);
@@ -61,7 +61,7 @@ export default function AegisOrb() {
   const [listening, setListening] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
-      role: "aegis",
+      role: "lyra",
       text: "Your local workspace is ready. I can help you capture, plan, search, and turn scattered context into a next action.",
     },
   ]);
@@ -84,10 +84,10 @@ export default function AegisOrb() {
   useEffect(() => {
     if (memoryHydratedRef.current) return;
     try {
-      const saved = window.localStorage.getItem("aegis-session-messages");
+      const saved = window.localStorage.getItem("lyra-session-messages");
       if (saved) {
         const parsed = JSON.parse(saved) as ChatMessage[];
-        if (Array.isArray(parsed) && parsed.every((message) => message && (message.role === "aegis" || message.role === "user") && typeof message.text === "string")) {
+        if (Array.isArray(parsed) && parsed.every((message) => message && (message.role === "lyra" || message.role === "user") && typeof message.text === "string")) {
           setMessages(parsed.slice(-20));
         }
       }
@@ -102,7 +102,7 @@ export default function AegisOrb() {
   useEffect(() => {
     if (!memoryHydratedRef.current) return;
     try {
-      window.localStorage.setItem("aegis-session-messages", JSON.stringify(messages.slice(-20)));
+      window.localStorage.setItem("lyra-session-messages", JSON.stringify(messages.slice(-20)));
     } catch {
       // Storage can be unavailable in private browsing; the session still works.
     }
@@ -225,12 +225,12 @@ export default function AegisOrb() {
       if (payload.requiresConfirmation) setPendingConfirmation(cleanPrompt);
       else setPendingConfirmation(null);
       const sourceSuffix = payload.sources?.length ? `\n\nSources:\n${payload.sources.map((source) => `• ${source.path}`).join("\n")}` : "";
-      setMessages((current) => [...current, { role: "aegis", text: `${payload.text ?? "I could not form a response for that request."}${sourceSuffix}` }]);
+      setMessages((current) => [...current, { role: "lyra", text: `${payload.text ?? "I could not form a response for that request."}${sourceSuffix}` }]);
     } catch {
       setMessages((current) => [
         ...current,
         {
-          role: "aegis",
+          role: "lyra",
           text: "I’m still local and ready, but the assistant route is not configured yet. Your request stayed in this session and no vault files were changed.",
         },
       ]);
@@ -254,7 +254,7 @@ export default function AegisOrb() {
       <div className="overlay-scanlines" />
 
       <div className="hud hud-title">
-        A.E.G.I.S.
+        L.Y.R.A.
         <div className="hud-subtitle">Local personal operating layer</div>
       </div>
 
@@ -288,11 +288,11 @@ export default function AegisOrb() {
         </div>
       </div>
 
-      <aside className="assistant-rail" aria-label="AEGIS local assistant">
+      <aside className="assistant-rail" aria-label="LYRA local assistant">
         <header className="assistant-header">
           <div>
             <div className="eyebrow">Personal workspace / 01</div>
-            <h1 className="assistant-name">AEGIS</h1>
+            <h1 className="assistant-name">LYRA</h1>
             <p className="assistant-tagline">A private layer for thinking, planning, and making the next move.</p>
           </div>
           <div className="status-stack">
@@ -322,14 +322,14 @@ export default function AegisOrb() {
           <section className="chat-list" aria-live="polite" aria-label="Conversation">
             {messages.map((message, index) => (
               <div key={`${message.role}-${index}`} className={`chat-message${message.role === "user" ? " user" : ""}`}>
-                <small>{message.role === "user" ? "You" : "Aegis"}</small>
+                <small>{message.role === "user" ? "You" : "Lyra"}</small>
                 {message.text}
               </div>
             ))}
-            {working && <div className="chat-message"><small>Aegis</small>Thinking locally…</div>}
+            {working && <div className="chat-message"><small>Lyra</small>Thinking locally…</div>}
             {pendingConfirmation && (
               <div className="confirmation-card">
-                <div><strong>Local write ready</strong><span>AEGIS will write only inside your configured vault boundary.</span></div>
+                <div><strong>Local write ready</strong><span>LYRA will write only inside your configured vault boundary.</span></div>
                 <div className="confirmation-actions">
                   <button type="button" className="confirm-btn" onClick={() => void submitPrompt(pendingConfirmation, true)}>Confirm write</button>
                   <button type="button" className="cancel-btn" onClick={() => setPendingConfirmation(null)}>Not now</button>
@@ -340,7 +340,7 @@ export default function AegisOrb() {
         </div>
 
         <form className="assistant-composer" onSubmit={onSubmit}>
-          <input className="composer-input" value={draft} onChange={(event) => setDraft(event.target.value)} placeholder="Tell AEGIS what you need…" aria-label="Message AEGIS" />
+          <input className="composer-input" value={draft} onChange={(event) => setDraft(event.target.value)} placeholder="Tell LYRA what you need…" aria-label="Message LYRA" />
           <button type="button" className={`voice-btn${listening ? " active" : ""}`} onClick={toggleVoice} disabled={!voiceAvailable} aria-label={voiceAvailable ? (listening ? "Stop listening" : "Start voice input") : "Voice input unavailable"} title={voiceAvailable ? "Voice input" : "Voice input unavailable in this browser"}>{listening ? "●" : "◉"}</button>
           <button className="composer-submit" type="submit" aria-label="Send message" disabled={working || !draft.trim()}>↗</button>
         </form>

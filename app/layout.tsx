@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AEGIS — Local Personal Operating Layer",
+  title: "LYRA — Local Personal Operating Layer",
   description: "A private, local-first assistant for thinking, planning, and working with your knowledge base.",
 };
 

@@ -1,4 +1,4 @@
-export type AegisSkill = {
+export type LyraSkill = {
   id: string;
   label: string;
   description: string;
@@ -6,7 +6,7 @@ export type AegisSkill = {
   tools: string[];
 };
 
-export const AEGIS_SKILLS: AegisSkill[] = [
+export const LYRA_SKILLS: LyraSkill[] = [
   { id: "idea-capture", label: "Idea capture", description: "Turn a thought into a bounded Markdown note.", trigger: /capture|idea|thought|jot/i, tools: ["obsidian.capture"] },
   { id: "daily-review", label: "Daily review", description: "Read priorities and prepare a focused plan.", trigger: /daily|today|priorit|review/i, tools: ["obsidian.daily-plan"] },
   { id: "knowledge-search", label: "Knowledge search", description: "Find linked excerpts in personal notes.", trigger: /search|find|knowledge|brain|vault/i, tools: ["obsidian.search"] },
@@ -15,5 +15,5 @@ export const AEGIS_SKILLS: AegisSkill[] = [
 ];
 
 export function matchSkills(prompt: string) {
-  return AEGIS_SKILLS.filter((skill) => skill.trigger.test(prompt));
+  return LYRA_SKILLS.filter((skill) => skill.trigger.test(prompt));
 }

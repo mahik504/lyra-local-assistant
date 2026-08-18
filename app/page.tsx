@@ -1,5 +1,5 @@
-import AegisOrb from "@/components/AegisOrb";
+import LyraOrb from "@/components/LyraOrb";
 
 export default function Home() {
-  return <AegisOrb />;
+  return <LyraOrb />;
 }

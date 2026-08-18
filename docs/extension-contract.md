@@ -1,10 +1,10 @@
-# AEGIS Extension Contract
+# LYRA Extension Contract
 
-AEGIS is designed to grow through explicit capability boundaries rather than a single unrestricted agent loop. A skill describes a user-facing workflow, a tool describes one bounded operation, and an MCP server describes an optional external capability source. These layers are intentionally separate so an operator can see what a request is allowed to do.
+LYRA is designed to grow through explicit capability boundaries rather than a single unrestricted agent loop. A skill describes a user-facing workflow, a tool describes one bounded operation, and an MCP server describes an optional external capability source. These layers are intentionally separate so an operator can see what a request is allowed to do.
 
 ## Skills
 
-Skills live in `lib/aegis/skill-registry.ts`. Each entry has a stable identifier, a human label, a trigger, a concise description, and the tool IDs it may use. A new skill should be narrow enough to test with a fixture, and it should describe whether it reads, writes, or requires confirmation.
+Skills live in `lib/lyra/skill-registry.ts`. Each entry has a stable identifier, a human label, a trigger, a concise description, and the tool IDs it may use. A new skill should be narrow enough to test with a fixture, and it should describe whether it reads, writes, or requires confirmation.
 
 | Skill | Primary tools | Default behavior |
 | --- | --- | --- |
@@ -16,7 +16,7 @@ Skills live in `lib/aegis/skill-registry.ts`. Each entry has a stable identifier
 
 ## MCP servers
 
-The current project includes a configuration-only contract in `lib/aegis/mcp-contract.ts`. External servers are disabled unless an operator explicitly sets `AEGIS_MCP_CONFIG_JSON` with an allow-listed server and tool set. The current build does not auto-discover, install, or execute arbitrary MCP commands. This is deliberate: a future adapter must add connection lifecycle management, timeout handling, audit events, and an approval surface before it can be enabled for personal use.
+The current project includes a configuration-only contract in `lib/lyra/mcp-contract.ts`. External servers are disabled unless an operator explicitly sets `LYRA_MCP_CONFIG_JSON` with an allow-listed server and tool set. The current build does not auto-discover, install, or execute arbitrary MCP commands. This is deliberate: a future adapter must add connection lifecycle management, timeout handling, audit events, and an approval surface before it can be enabled for personal use.
 
 A minimal configuration shape is:
 
